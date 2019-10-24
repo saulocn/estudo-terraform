@@ -11,13 +11,13 @@ provider "aws" {
 
 resource "aws_instance" "dev" {
   count         = 3
-  ami           = var.amis["us-east-1"]
-  instance_type = var.instance-t2micro
+  ami           = "${var.amis["us-east-1"]}"
+  instance_type = "${var.instance-t2micro}"
   # Essa chave foi gerada através do comando 
   # ssh-keygen -f terraform-aws -t rsa
   # e adicionado ao diretório ~/.ssh/ para ser referenciado quando se tentar conectar por ssh
   # ssh -i ~/.ssh/terraform-aws ubuntu@${máquina que se deseja acessar}
-  key_name = var.key-name
+  key_name = "${var.key-name}"
   tags = {
     Name = "dev${count.index}"
   }
@@ -26,9 +26,9 @@ resource "aws_instance" "dev" {
 
 
 resource "aws_instance" "dev4" {
-  ami           = var.amis["us-east-1"]
-  instance_type = var.instance-t2micro
-  key_name      = var.key-name
+  ami           = "${var.amis["us-east-1"]}"
+  instance_type = "${var.instance-t2micro}"
+  key_name      = "${var.key-name}"
   tags = {
     Name = "dev4"
   }
@@ -46,9 +46,9 @@ resource "aws_s3_bucket" "dev4" {
 }
 
 resource "aws_instance" "dev5" {
-  ami           = var.amis["us-east-1"]
-  instance_type = var.instance-t2micro
-  key_name      = var.key-name
+  ami           = "${var.amis["us-east-1"]}"
+  instance_type = "${var.instance-t2micro}"
+  key_name      = "${var.key-name}"
   tags = {
     Name = "dev5"
   }
@@ -58,11 +58,24 @@ resource "aws_instance" "dev5" {
 
 resource "aws_instance" "dev6" {
   provider = "aws.us-east-2"
-  ami           = var.amis["us-east-2"]
-  instance_type = var.instance-t2micro
-  key_name      = var.key-name
+  ami           = "${var.amis["us-east-2"]}"
+  instance_type = "${var.instance-t2micro}"
+  key_name      = "${var.key-name}"
   tags = {
     Name = "dev6"
+  }
+  vpc_security_group_ids = ["${aws_security_group.acesso-ssh-us-east-2.id}"]
+  depends_on = ["aws_dynamodb_table.dynamodb-homologacao"]
+}
+
+
+resource "aws_instance" "dev7" {
+  provider = "aws.us-east-2"
+  ami           = "${var.amis["us-east-2"]}"
+  instance_type = "${var.instance-t2micro}"
+  key_name      = "${var.key-name}"
+  tags = {
+    Name = "dev7"
   }
   vpc_security_group_ids = ["${aws_security_group.acesso-ssh-us-east-2.id}"]
   depends_on = ["aws_dynamodb_table.dynamodb-homologacao"]

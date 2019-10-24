@@ -24,26 +24,29 @@ resource "aws_instance" "dev" {
   vpc_security_group_ids = ["${aws_security_group.acesso-ssh.id}"]
 }
 
+# Para se remover o recurso, basta retirá-lo do arquivo e dar um apply
+# Também pode ser removido com o comando terraform destroy -target aws_instance.dev4 e 
+# removê-los do arquivo após o comando para que não sejam aplicados novamente
+#
+# resource "aws_instance" "dev4" {
+#   ami           = "${var.amis["us-east-1"]}"
+#   instance_type = "${var.instance-t2micro}"
+#   key_name      = "${var.key-name}"
+#   tags = {
+#     Name = "dev4"
+#   }
+#   vpc_security_group_ids = ["${aws_security_group.acesso-ssh.id}"]
+#   depends_on             = [aws_s3_bucket.dev4]
+# }
 
-resource "aws_instance" "dev4" {
-  ami           = "${var.amis["us-east-1"]}"
-  instance_type = "${var.instance-t2micro}"
-  key_name      = "${var.key-name}"
-  tags = {
-    Name = "dev4"
-  }
-  vpc_security_group_ids = ["${aws_security_group.acesso-ssh.id}"]
-  depends_on             = [aws_s3_bucket.dev4]
-}
+# resource "aws_s3_bucket" "dev4" {
+#   bucket = "saulocn-labs-dev4"
+#   acl    = "private"
 
-resource "aws_s3_bucket" "dev4" {
-  bucket = "saulocn-labs-dev4"
-  acl    = "private"
-
-  tags = {
-    Name = "saulocn-labs-dev4"
-  }
-}
+#   tags = {
+#     Name = "saulocn-labs-dev4"
+#   }
+# }
 
 resource "aws_instance" "dev5" {
   ami           = "${var.amis["us-east-1"]}"

@@ -11,7 +11,7 @@ provider "aws" {
 
 resource "aws_instance" "dev" {
   count         = 3
-  ami           = "ami-026c8acd92718196b"
+  ami           = var.amis["us-east-1"]
   instance_type = "t2.micro"
   # Essa chave foi gerada através do comando 
   # ssh-keygen -f terraform-aws -t rsa
@@ -26,7 +26,7 @@ resource "aws_instance" "dev" {
 
 
 resource "aws_instance" "dev4" {
-  ami           = "ami-026c8acd92718196b"
+  ami           = var.amis["us-east-1"]
   instance_type = "t2.micro"
   key_name      = "terraform-aws"
   tags = {
@@ -46,7 +46,7 @@ resource "aws_s3_bucket" "dev4" {
 }
 
 resource "aws_instance" "dev5" {
-  ami           = "ami-026c8acd92718196b"
+  ami           = var.amis["us-east-1"]
   instance_type = "t2.micro"
   key_name      = "terraform-aws"
   tags = {
@@ -58,7 +58,7 @@ resource "aws_instance" "dev5" {
 
 resource "aws_instance" "dev6" {
   provider = "aws.us-east-2"
-  ami           = "ami-0d8f6eb4f641ef691"
+  ami           = var.amis["us-east-2"]
   instance_type = "t2.micro"
   key_name      = "terraform-aws"
   tags = {

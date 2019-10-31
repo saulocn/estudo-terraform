@@ -48,6 +48,15 @@ resource "aws_instance" "dev" {
 #   }
 # }
 
+resource "aws_s3_bucket" "homologacao" {
+  bucket = "saulocn-labs-homologacao"
+  acl    = "private"
+
+  tags = {
+    Name = "saulocn-labs-homologacao"
+  }
+}
+
 resource "aws_instance" "dev5" {
   ami           = "${var.amis["us-east-1"]}"
   instance_type = "${var.instance-t2micro}"
